@@ -109,37 +109,6 @@
           </el-row>
         </el-form-item>
       </el-col>
-      <el-divider content-position="center">{{ t('login.otherLogin') }}</el-divider>
-      <el-col :span="24" style="padding-left: 10px; padding-right: 10px">
-        <el-form-item>
-          <div class="flex justify-between w-[100%]">
-            <Icon
-              v-for="(item, key) in socialList"
-              :key="key"
-              :icon="item.icon"
-              :size="30"
-              class="cursor-pointer anticon"
-              color="#999"
-              @click="doSocialLogin(item.type)"
-            />
-          </div>
-        </el-form-item>
-      </el-col>
-      <el-divider content-position="center">萌新必读</el-divider>
-      <el-col :span="24" style="padding-left: 10px; padding-right: 10px">
-        <el-form-item>
-          <div class="flex justify-between w-[100%]">
-            <el-link href="https://doc.iocoder.cn/" target="_blank">📚开发指南</el-link>
-            <el-link href="https://doc.iocoder.cn/video/" target="_blank">🔥视频教程</el-link>
-            <el-link href="https://www.iocoder.cn/Interview/good-collection/" target="_blank">
-              ⚡面试手册
-            </el-link>
-            <el-link href="http://static.yudao.iocoder.cn/mp/Aix9975.jpeg" target="_blank">
-              🤝外包咨询
-            </el-link>
-          </div>
-        </el-form-item>
-      </el-col>
     </el-row>
   </el-form>
 </template>
@@ -156,7 +125,7 @@ import * as LoginApi from '@/api/login'
 import { LoginStateEnum, useFormValid, useLoginState } from './useLogin'
 
 const { t } = useI18n()
-const message = useMessage()
+// const message = useMessage()
 const iconHouse = useIcon({ icon: 'ep:house' })
 const iconAvatar = useIcon({ icon: 'ep:avatar' })
 const iconLock = useIcon({ icon: 'ep:lock' })
@@ -190,12 +159,12 @@ const loginData = reactive({
   }
 })
 
-const socialList = [
-  { icon: 'ant-design:github-filled', type: 0 },
-  { icon: 'ant-design:wechat-filled', type: 30 },
-  { icon: 'ant-design:alipay-circle-filled', type: 0 },
-  { icon: 'ant-design:dingtalk-circle-filled', type: 20 }
-]
+// const socialList = [
+//   { icon: 'ant-design:github-filled', type: 0 },
+//   { icon: 'ant-design:wechat-filled', type: 30 },
+//   { icon: 'ant-design:alipay-circle-filled', type: 0 },
+//   { icon: 'ant-design:dingtalk-circle-filled', type: 20 }
+// ]
 
 // 获取验证码
 const getCode = async () => {
@@ -273,25 +242,6 @@ const handleLogin = async (params) => {
 }
 
 // 社交登录
-const doSocialLogin = async (type: number) => {
-  if (type === 0) {
-    message.error('此方式未配置')
-  } else {
-    loginLoading.value = true
-    if (loginData.tenantEnable === 'true') {
-      await message.prompt('请输入租户名称', t('common.reminder')).then(async ({ value }) => {
-        const res = await LoginApi.getTenantIdByName(value)
-        authUtil.setTenantId(res)
-      })
-    }
-    // 计算 redirectUri
-    const redirectUri =
-      location.origin + '/social-login?type=' + type + '&redirect=' + (redirect.value || '/')
-    // 进行跳转
-    const res = await LoginApi.socialAuthRedirect(type, encodeURIComponent(redirectUri))
-    window.location.href = res
-  }
-}
 watch(
   () => currentRoute.value,
   (route: RouteLocationNormalizedLoaded) => {

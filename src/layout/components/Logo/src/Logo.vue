@@ -67,7 +67,7 @@ watch(
     >
       <img
         class="w-[calc(var(--logo-height)-10px)] h-[calc(var(--logo-height)-10px)]"
-        src="@/assets/imgs/logo.png"
+        src="@/assets/imgs/logo-white.png"
       />
       <div
         v-if="show"

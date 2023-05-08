@@ -103,8 +103,8 @@ export default {
     small: '小'
   },
   login: {
-    welcome: '欢迎使用本系统',
-    message: '开箱即用的中后台管理系统',
+    welcome: '让科技服务真正发挥商业价值',
+    message: '海通恒运智能工单系统',
     tenantname: '租户名称',
     username: '用户名',
     password: '密码',
